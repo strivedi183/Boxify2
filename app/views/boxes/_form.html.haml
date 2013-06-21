@@ -1,0 +1,14 @@
+= form_for @box do |f|
+	= f.label :name
+	= f.text_field :name
+	= f.label :description
+	= f.text_field :description
+	= f.label :tag, "Items (list that may appear in this box)"
+  = f.text_field_tag :tags
+	= f.label :frequency
+	= f.text_field : frequency
+	= f.label :ship_date
+	= f.text_field :ship_date
+	= f.label :price
+	= f.text_field :price
+	= f.submit, class: "button"

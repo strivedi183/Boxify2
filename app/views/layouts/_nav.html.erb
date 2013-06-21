@@ -1,0 +1,13 @@
+<%= link_to(image_tag("boxify_logo.png", :width => "170", :class => "header-image"), root_path) %>
+
+<ul>
+	<% if user_signed_in? %>
+	<li><%= link_to "Boxes", boxes_path %></li>
+	<li><%= link_to "Subscriptions", subscriptions_path %></li>
+	<li><%= link_to 'Shipments', shipments_path %></li>
+	<li><%= link_to "Edit Account", edit_user_registration_path %></li>
+	<li><%= link_to "Log out", destroy_user_session_path, :method => :delete %>
+	<% else %>
+	  <%= link_to "Sign up", new_user_registration_path %>  <%= link_to "Sign in", new_user_session_path %>
+	<% end %></li>
+</ul>

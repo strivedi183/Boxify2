@@ -1,0 +1,31 @@
+- if current_user.role == "Merchant"
+	%h2 Your Subscribers
+-else
+	%h2 Your Subscriptions
+
+/ Probably move this into a helper method or a partial
+= select_tag(:filter, options_for_select([["All", "All"],["Active", "Active"],["Inactive", "Inactive"]]), :onchange => "this.form.submit();", :selected => params[:filter])
+
+%table
+  %thead
+    %tr
+      %th Name
+      %th Frequency
+      %th Ship Date
+      %th Price
+      - if current_user.role == "Merchant"
+      	%th Active?
+      -else
+      	%th
+      %tbody
+        - @subscriptions.each do |subscription|
+          %tr
+            %td= link_to "#{subscription.box.name}", box
+            %td= subscription.box.description
+            %td= subscription.box.frequency
+            %td= subscription.box.ship_date
+            %td= subscription.box.price
+            - if current_user.role == "Merchant"
+            	%td= subscription.active == true ? "Yes" : "No"
+            - else
+            	%td= link_to "Delete", :method => :delete, :confirm => "Do you want to delete this subscription?"
