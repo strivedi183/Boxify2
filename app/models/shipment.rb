@@ -2,10 +2,11 @@ class Shipment
 	include Mongoid::Document
   include Mongoid::Timestamps
 
-  field :name, type: String
+  field :desc, type: String
   field :ship_date, type: DateTime
   field :has_shipped, type: Boolean
 
+  validates_presence_of :name, :ship_date, :has_shipped
   belongs_to :subscripton
   belongs_to :user # only if user is a customer
 

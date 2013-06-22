@@ -8,6 +8,7 @@ gem 'bcrypt-ruby'
 gem 'devise'
 gem 'cancan'
 gem 'stripe'
+gem 'omniauth-facebook'
 
 # Gems for MongoDB
 gem "mongoid"

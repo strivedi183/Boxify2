@@ -2,13 +2,19 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
-  	# CanCan authentication
-  	if user.role? :admin
-  		can :manage, :all
-  	elsif user.role? :merchant
-  		can # do all other allowed actions
-  	else
-  		can # subscribe to boxes
-  	end
+    # initialize user
+  end
+
+  def customer
+    can :manage, Subscription
+  end
+
+  def merchant
+    can :manage, Box
+    can :manage, Shipment
+  end
+
+  def admin
+    can :manage, :all
   end
 end

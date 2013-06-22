@@ -55,22 +55,27 @@ class User
   field :interests,     type: Array # used to match with Boxes (items in Box)
   field :role,          type: String # added for CanCan
 
+  # ROLES = [:admin, :customer, :merchant]
+  # ROLES_FOR_SELECT = ROLES.collect {|r| [r.to_s.titleize, r.to_s] }
+
   attr_accessible :email, :password, :password_confirmation, :remember_me, 
                   :name, :address, :logo, :cc_id, :provider, :uid, :username,
                   :role_ids
 
   validates_uniqueness_of :email
+  validates_presence_of :email, :role
 
   has_many :boxes
   has_many :subscriptions
   has_and_belongs_to_many :roles
 
   before_save :define_role
+  after_destroy :remove_boxes, :deactivate_subscriptions
 
   # method to check role of user
   def role?(role)
     # may need refactor for Mongoid
-    return !!self.roles.find_by_name(role.to_s.camelize)
+    return !!self.roles.find_by(role: role.to_s.camelize)
   end
 
   # Assign default role to a new user (default is customer)
@@ -132,4 +137,19 @@ class User
   #     super
   #   end
   # end
+
+  private
+    def :remove_boxes
+      if self.role == "Merchant"
+        self.boxes.destroy_all
+        # write logic to set all subscriptions to boxes created by this user to inactive
+      end
+    end
+
+    def :deactivate_subscriptions
+      if self.role == "Customer"
+        # logic to set all subscriptions to innactive
+        self.subscriptions.is_active == false
+      end
+    end
 end
