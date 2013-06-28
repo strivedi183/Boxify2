@@ -1,22 +1,6 @@
-%h2 View Boxes
+%h3 View Boxes
 
-%table
-  %thead
-    %tr
-      %th Name
-      %th Description
-      %th Frequency
-      %th Ship Date
-      %th Price
-      %th
-      %tbody
-        - @boxes.each do |box|
-          %tr
-            %td= link_to "#{box.name}", edit_box_path
-            %td= box.description
-            %td= box.frequency
-            %td= box.ship_date
-            %td= box.price
-            %td= link_to "Delete", :method => :delete, :confirm => "Do you want to do this?"
-
-= link_to 'New Box', new_box_path
+- if current_user.role == "Customer"
+  = render 'customer_index'
+-else
+  = render 'merchant_index'

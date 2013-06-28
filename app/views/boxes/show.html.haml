@@ -1,15 +1,25 @@
-= @box.name
+%h2= @box.name
 
-%p= @box.image_lg
+%p= @box.image
 
-%p= @box.name
+%p
+	Box description: 
+	= @box.description
 
-%p= @box.description
+%p
+	Delivery frequency: 
+	= @box.frequency
 
-%p= @box.frequency
+%p
+	Shipment Details: 
+	= @box.shipment_desc
 
-%p= @box.ship_date
+%p
+	Price: 
+	= @box.price
 
-%p= @box.price
+%p
+	Items: 
+	= @box.items.join(', ')
 
-= link_to "Subscribe", class: button # Add acction to this button
+= link_to "Subscribe", controller: "subscriptions", action: "create", class: "button"

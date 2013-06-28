@@ -1,0 +1,18 @@
+%table
+  %thead
+    %tr
+      %th Name
+      %th Description
+      %th Frequency
+      %th Price
+      %th
+      %tbody
+        - @boxes.each do |box|
+          %tr
+            %td= link_to "#{box.name}", edit_box_path(box)
+            %td= box.description
+            %td= box.frequency
+            %td= box.price
+            %td= link_to "Delete", box, :method => :delete, :confirm => "Do you want to do this?"
+
+= link_to 'New Box', new_box_path

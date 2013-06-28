@@ -1,14 +1,14 @@
 class SubscriptionsController < ApplicationController
 	before_filter :authenticate_user!
-  load_and_authorize_resource # to load in CanCan permissions
+  # load_and_authorize_resource # to load in CanCan permissions
 
   def index
-    if params[:filter]includes? [nil, "All"]
+    if params[:filter] == nil || params[:filter] == "All"
       @subscriptions = Subscription.all
     elsif params[:filter] == "Shipped"
-      @subscriptions = # items that have shipped
+      @subscriptions = Subscription.where(has_shipped: true)# items that have shipped
     else
-      @subsciptions = # items that haven't shipped yet
+      @subsciptions = Subscription.where(has_shipped: false) # items that haven't shipped yet
     end
   end
 
@@ -28,7 +28,7 @@ class SubscriptionsController < ApplicationController
 
     # stripe
     subscription.save
-    redirect_to subscription
+    redirect_to boxes_path
   end
 
   def edit

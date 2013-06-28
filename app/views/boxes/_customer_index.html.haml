@@ -1,0 +1,33 @@
+.row
+  .columns.large-12
+    #masonry-container.transitions-enabled.infinite-scroll.clearfix
+      #boxes_index
+        - @boxes.each do |box|
+          .box
+            .box-image= link_to(image_tag(box.image, :width => '100'), box)
+            
+            %h5= box.name
+            %p 
+              Description:
+              = box.description
+            %p 
+              Frequency: 
+              = box.frequency
+            %p 
+              Price: 
+              = box.price
+            %p 
+              Items: 
+              = box.items.join(', ')
+            %p
+              = link_to "Subscribe", :controller => 'subscriptions', :action => 'create', :class => 'button'
+
+            / - if !box.is_owner?(current_user)
+            /   - if !box.is_subscribed?(current_user)
+            /     - if !current_user.cc_id.present?
+            /       = render(:partial => 'boxes/anonymous', :locals => {:box => box})
+            /       / = link_to 'subscribe', new_subscription_path(box)
+            /     - else
+            /       = render(:partial => 'boxes/customer', :locals => {:box => box})
+            /   - else
+            /     = link_to 'unsubscribe', edit_subscription_path(box), :class => 'button small alert'

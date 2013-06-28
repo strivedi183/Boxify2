@@ -4,10 +4,10 @@ class Subscription
 
   field :is_active, type: Boolean
   field :price, type: BigDecimal
-  field :start_date, type DateTime
-  field :end_date, type DateTime
+  field :start_date, type: DateTime
+  field :end_date, type: DateTime
 
-  attr_accessible :box_id, :user_id, :is_active
+  attr_accessible :box_id, :user_id, :is_active, :price, :start_date, :end_date
 
   validates_presence_of :price, :start_date, :is_active, :box_id, :user_id
 

@@ -1,4 +1,4 @@
-%h2 Shipments
+%h3 Shipments
 
 / Probably move this into a helper method or a partial
 = select_tag(:filter, options_for_select([["All", "All"],["Shipped", "Shipped"],["Not Shipped", "Not Shipped"]]), :onchange => "this.form.submit();", :selected => params[:filter])
@@ -9,8 +9,27 @@
       %th Name
       %th Ship Date
       %th Shippped?
+      %th First
+      %th Last
+      %th Address
+      %th City
+      %th State
+      %th Zip
+      %th Phone
+      %tbody
         - @shipments.each do |shipment|
           %tr
-            %td= current_user.role == "Merchant" ? link_to "#{shipment.name}", edit_shipment_path : shipment.name
-            %td= shipment.ship_date
-            %td= shipment.has_shipped
+            %td= current_user.role == "Merchant" ? link_to(shipment.desc, edit_shipment_path) : shipment.desc
+            %td= shipment.ship_date.strftime("%d/%m/%Y")
+            %td= shipment.has_shipped == true ? "Yes" : "No"
+            %td= shipment.user.first_name
+            %td= shipment.user.last_name
+            %td= shipment.user.address
+            %td= shipment.user.city
+            %td= shipment.user.state
+            %td= shipment.user.zip
+            %td= shipment.user.phone
+            - if current_user.role == "Customer"
+              %td= link_to "Update Shipment Info", edit_registration_path(current_user) 
+
+=#raise 'foo'

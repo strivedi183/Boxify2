@@ -7,19 +7,26 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 # Clean the database
-Users.destroy_all
-Boxes.destroy_all
+User.destroy_all
+Role.destroy_all
+Box.destroy_all
 Subscription.destroy_all
 Shipment.destroy_all
 
 # Users
-# a1 = User.create(first_name: "Jamal", last_name: "OGarro", role: "Admin", interests: ["sneakers", "music"], email: "jamal@example.com", password: "11111111", password_confirmation: "11111111")
+a1 = User.create(first_name: "Jamal", last_name: "OGarro", role: "Admin", interests: ["sneakers", "music"], email: "jamal@example.com", password: "11111111", password_confirmation: "11111111")
 
 m1 = User.create(name: "Kith NYC", first_name: "John", last_name: "Smith", role: "Merchant", email: "merchant1@example.com", password: "11111111", password_confirmation: "11111111")
 m2 = User.create(name: "Music Hut", first_name: "John", last_name: "Smith", role: "Merchant", email: "merchant2@example.com", password: "11111111", password_confirmation: "11111111")
 m3 = User.create(name: "Boards R Us", first_name: "John", last_name: "Smith", role: "Merchant", email: "merchant3@example.com", password: "11111111", password_confirmation: "11111111")
 
-c1 = User.create(first_name: "Luke", last_name: "Skywalker", role: "Customer", interests: ["books", "sneakers", "cars", "comics"] email: "customer@example.com", password: "11111111", password_confirmation: "11111111")
+c1 = User.create(first_name: "Luke", last_name: "Skywalker", role: "Customer", interests: ["books", "sneakers", "cars", "comics"], email: "customer@example.com", password: "11111111", password_confirmation: "11111111")
+
+
+# Roles
+r1 = Role.create(user_ids: [a1.id], name: "Admin")
+r2 = Role.create(user_ids: [m1.id, m2.id, m3.id], name: "Merchant")
+r3 = Role.create(user_ids: [c1.id], name: "Customer")
 
 
 # Boxes

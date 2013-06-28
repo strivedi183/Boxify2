@@ -1,14 +1,20 @@
 class BoxesController < ApplicationController
 	before_filter :authenticate_user!, :except => [:index, :show]
-  load_and_authorize_resource # to load in CanCan permissions
+  # load_and_authorize_resource # to load in CanCan permissions
 
   # before_filter :current_user, 
 
   def index
     if params[:tag]
       @boxes = Box.tagged_with(params[:tag])
+      # @boxes = Box.items.include?(current_user.items)
     else
-      @boxes = Box.all
+      @boxes = Box.all.order_by([:created_at, :desc])
+    end
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @boxes }
     end
   end
 
@@ -29,6 +35,11 @@ class BoxesController < ApplicationController
 
   def edit
     @box = Box.find(params[:id])
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @box }
+    end
   end
 
   def update
@@ -40,6 +51,10 @@ class BoxesController < ApplicationController
   end
 
   def destroy
+    @box = Box.find(params[:id])
+    @box.destroy
+
+    redirect_to boxes_path
   end
   
   def purchase

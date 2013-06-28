@@ -9,6 +9,7 @@ gem 'devise'
 gem 'cancan'
 gem 'stripe'
 gem 'omniauth-facebook'
+gem 'jquery-tokeninput-rails'
 
 # Gems for MongoDB
 gem "mongoid"

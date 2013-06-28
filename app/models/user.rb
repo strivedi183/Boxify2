@@ -59,8 +59,9 @@ class User
   # ROLES_FOR_SELECT = ROLES.collect {|r| [r.to_s.titleize, r.to_s] }
 
   attr_accessible :email, :password, :password_confirmation, :remember_me, 
-                  :name, :address, :logo, :cc_id, :provider, :uid, :username,
-                  :role_ids
+                  :name, :first_name, :last_name, :address, :city, :state,
+                  :zip, :phone, :logo, :cc_id, :provider, :uid, :interests,
+                  :role, :role_ids
 
   validates_uniqueness_of :email
   validates_presence_of :email, :role
@@ -69,8 +70,8 @@ class User
   has_many :subscriptions
   has_and_belongs_to_many :roles
 
-  before_save :define_role
-  after_destroy :remove_boxes, :deactivate_subscriptions
+  # before_save :define_role
+  # after_destroy :remove_boxes, :deactivate_subscriptions
 
   # method to check role of user
   def role?(role)
@@ -81,7 +82,7 @@ class User
   # Assign default role to a new user (default is customer)
   def define_role
     if self.role_ids.empty?
-      self.role_ids = ["51c3a61d2986cb13a7000002"] # default is customer
+      self.role_ids = ["51c3a61d2986cb13a7000002"]
     end
   end
 
@@ -139,17 +140,17 @@ class User
   # end
 
   private
-    def :remove_boxes
-      if self.role == "Merchant"
-        self.boxes.destroy_all
-        # write logic to set all subscriptions to boxes created by this user to inactive
-      end
-    end
+    # def remove_boxes
+    #   if self.role == "Merchant"
+    #     self.boxes.destroy_all
+    #     # write logic to set all subscriptions to boxes created by this user to inactive
+    #   end
+    # end
 
-    def :deactivate_subscriptions
-      if self.role == "Customer"
-        # logic to set all subscriptions to innactive
-        self.subscriptions.is_active == false
-      end
-    end
+    # def deactivate_subscriptions
+    #   if self.role == "Customer"
+    #     # logic to set all subscriptions to innactive
+    #     self.subscriptions.is_active == false
+    #   end
+    # end
 end

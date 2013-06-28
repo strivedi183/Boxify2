@@ -12,6 +12,6 @@ Boxify2::Application.routes.draw do
   root :to => "home#index"
 
   resources :boxes
-  resources :subscriptions, :only [:index, :create, :destroy]
-  resources :shipments, :only [:index, :edit, :create, :update, :destroy]
+  resources :subscriptions, :only => [:index, :create, :destroy]
+  resources :shipments, :only => [:index, :edit, :create, :update, :destroy]
 end
